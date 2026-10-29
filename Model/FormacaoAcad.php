@@ -7,8 +7,8 @@ class FormacaoAcad
     private $inicio;
     private $fim;
     private $descricao;
-    
-  
+
+
     //ID
     public function setID($id)
     {
@@ -33,12 +33,12 @@ class FormacaoAcad
     {
         $this->inicio = $inicio;
     }
-       public function getInicio()
+    public function getInicio()
     {
         return $this->inicio;
     }
 
-     //fim
+    //fim
     public function setFim($fim)
     {
         $this->fim = $fim;
@@ -61,23 +61,23 @@ class FormacaoAcad
     //Métodos Banco de Dados
     public function inserirBD()
     {
-        require_once 'ConexaoBD.php';   
-        
+        require_once 'ConexaoBD.php';
+
         $con = new ConexaoBD();
         $conn = $con->conectar();
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
 
-       $sql = "INSERT INTO formacaoacademica (idusuario, inicio, fim, descricao) 
-        VALUES ('".$this->idusuario."','".$this->inicio."','".$this->fim."','".$this->descricao."')";
+        $sql = "INSERT INTO formacaoacademica (idusuario, inicio, fim, descricao) 
+        VALUES ('" . $this->idusuario . "','" . $this->inicio . "','" . $this->fim . "','" . $this->descricao . "')";
 
-      
+
         if ($conn->query($sql) === true) {
             $this->id = mysqli_insert_id($conn);
             $conn->close();
             return true;
-           
+
         } else {
             $conn->close();
             return false;
@@ -86,22 +86,22 @@ class FormacaoAcad
 
     public function excluirBD($id)
     {
-        require_once 'ConexaoBD.php';   
-        
+        require_once 'ConexaoBD.php';
+
         $con = new ConexaoBD();
         $conn = $con->conectar();
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
 
-       $sql = "DELETE FROM formacaoacademica WHERE idformacaoAcademica = '".$id ."';";
+        $sql = "DELETE FROM formacaoacademica WHERE idformacaoAcademica = '" . $id . "';";
 
-      
+
         if ($conn->query($sql) === true) {
-           
+
             $conn->close();
             return true;
-           
+
         } else {
             $conn->close();
             return false;
@@ -109,15 +109,15 @@ class FormacaoAcad
     }
     public function listaFormacoes($idusuario)
     {
-        require_once 'ConexaoBD.php';   
-        
+        require_once 'ConexaoBD.php';
+
         $con = new ConexaoBD();
         $conn = $con->conectar();
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
-        } 
+        }
 
-        $sql = "SELECT * FROM formacaoacademica WHERE idusuario =  '".$idusuario."'" ;
+        $sql = "SELECT * FROM formacaoacademica WHERE idusuario =  '" . $idusuario . "'";
         $re = $conn->query($sql);
         $conn->close();
         return $re;
@@ -125,18 +125,18 @@ class FormacaoAcad
 
     public function atualizarBD()
     {
-        require_once 'ConexaoBD.php';   
+        require_once 'ConexaoBD.php';
         $con = new ConexaoBD();
         $conn = $con->conectar();
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
-        } 
-        $sql = "UPDATE usuario SET nome = '".$this->nome."', cpf = '". $this->cpf."', dataNascimento = '". $this->dataNascimento."',
-        email='".$this->email."'  WHERE idusuario ='". $this->id. "'"    ;
+        }
+        $sql = "UPDATE usuario SET nome = '" . $this->nome . "', cpf = '" . $this->cpf . "', dataNascimento = '" . $this->dataNascimento . "',
+        email='" . $this->email . "'  WHERE idusuario ='" . $this->id . "'";
         if ($conn->query($sql) === TRUE) {
             $conn->close();
             return TRUE;
-           
+
         } else {
             $conn->close();
             return FALSE;

@@ -1,18 +1,20 @@
 <?php
 
-class ConexaoBD{
-    
-    private $servername = "localhost";
-    private $username = "root";
-    private $password = "1234";
-    private $dbname = "projeto_final";
-
-    public function conectar()
+class ConexaoBD
+{
+    /** Abre conexão com a configuração central e propaga erros ao Controller. */
+    public function conectar(): mysqli
     {
-        $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-        return $conn;
-    }   
-
+        $config = require __DIR__ . '/../Config/database.php';
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        $conexao = new mysqli(
+            $config['host'],
+            $config['username'],
+            $config['password'],
+            $config['database'],
+            $config['port']
+        );
+        $conexao->set_charset('utf8mb4');
+        return $conexao;
+    }
 }
-
-?>
